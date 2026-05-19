@@ -14,9 +14,13 @@ For GeoDataFrame support (recommended):
 pip install agenticearth[geo]
 ```
 
+## Requirements
+
+CLI and SDK access requires a **Pro plan or above**. [Upgrade at agenticearth.app →](https://agenticearth.app)
+
 ## Get an API key
 
-Sign in at [agenticearth.app](https://agenticearth.app), open **Settings → API Keys**, and create a key. Keys start with `ae_sk_`.
+Sign in at [agenticearth.app](https://agenticearth.app), click your avatar → **API Keys**, and generate a key. Keys start with `ae_sk_`.
 
 ## Authenticate
 
