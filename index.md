@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: Python SDK
       link: /sdk/
+    - theme: alt
+      text: View on PyPI ↗
+      link: https://pypi.org/project/agenticearth/
 
 features:
   - icon: ⚡

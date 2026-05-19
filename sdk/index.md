@@ -4,6 +4,9 @@ The `agenticearth` Python package gives you programmatic access to the same agen
 
 ## Installation
 
+[![PyPI version](https://img.shields.io/pypi/v/agenticearth?color=c4a46b&labelColor=1a1a2a&logo=python&logoColor=white)](https://pypi.org/project/agenticearth/)
+[![Python versions](https://img.shields.io/pypi/pyversions/agenticearth?color=c4a46b&labelColor=1a1a2a)](https://pypi.org/project/agenticearth/)
+
 ```bash
 pip install agenticearth
 ```
@@ -14,7 +17,7 @@ With GeoDataFrame support (recommended for data science workflows):
 pip install agenticearth[geo]
 ```
 
-**Requirements:** Python ≥ 3.9
+**Requirements:** Python ≥ 3.9 · [View on PyPI ↗](https://pypi.org/project/agenticearth/)
 
 **Dependencies:** `httpx`, `rich`, `click`
 
