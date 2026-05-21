@@ -13,6 +13,7 @@ export default defineConfig({
       { text: 'Quickstart', link: '/quickstart' },
       { text: 'CLI', link: '/cli' },
       { text: 'Python SDK', link: '/sdk/' },
+      { text: 'MCP', link: '/mcp' },
       { text: 'agenticearth.app', link: 'https://agenticearth.app' },
     ],
 
@@ -37,6 +38,12 @@ export default defineConfig({
         items: [
           { text: 'Overview', link: '/sdk/' },
           { text: 'API Reference', link: '/sdk/reference' },
+        ],
+      },
+      {
+        text: 'Integrations',
+        items: [
+          { text: 'MCP Server', link: '/mcp' },
         ],
       },
     ],

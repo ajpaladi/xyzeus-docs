@@ -16,6 +16,9 @@ hero:
       text: Python SDK
       link: /sdk/
     - theme: alt
+      text: MCP Server
+      link: /mcp
+    - theme: alt
       text: View on PyPI ↗
       link: https://pypi.org/project/agenticearth/
 
@@ -43,6 +46,12 @@ features:
   - icon: 📤
     title: Export anywhere
     details: "Save results as GeoJSON, CSV, or Parquet with --output or result.save(). Every result is also accessible by key for later retrieval."
+
+  - icon: 🔌
+    title: MCP — native in Claude Desktop & Cursor
+    details: "Connect Agentic Earth to Claude Desktop, Cursor, or Windsurf in two minutes. 150+ live geospatial datasets as native tools inside your AI assistant."
+    link: /mcp
+    linkText: Setup guide →
 ---
 
 ## `ae chat` — a smarter terminal
