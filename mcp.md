@@ -6,6 +6,10 @@ Connect Agentic Earth to Claude Desktop, Cursor, Windsurf, and any MCP-compatibl
 Model Context Protocol (MCP) is an open standard that lets AI assistants call external tools. Connecting Agentic Earth means your AI host gets access to 150+ live geospatial datasets as native tools.
 :::
 
+::: warning Requirements
+MCP access requires a **Pro plan or above**. [Upgrade at agenticearth.app →](https://agenticearth.app)
+:::
+
 ---
 
 ## Install
@@ -108,9 +112,11 @@ Results are stored server-side by key. Use `ae_fetch(result_key)` to retrieve th
 
 ---
 
-## Credits
+## Credits & tier enforcement
 
-Every `ae_query` call draws from your Agentic Earth credit balance — the same pool used by the web app and CLI. Check your balance anytime:
+MCP access requires a **Pro plan or above**. Every `ae_query` call draws from the same credit balance used by the web app and CLI — there is no separate MCP quota and no way to bypass tier limits via the MCP.
+
+Check your balance anytime:
 
 ```bash
 ae credits
