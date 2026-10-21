@@ -172,6 +172,77 @@ for d in items:
 
 ---
 
+### `AgenticEarth.graph_summary()`
+
+Knowledge graph stats for the current user — nodes/edges you've touched, plus your contribution to the global graph (coverage %, edges contributed, first discoveries, dominant domain). Always scoped to your own account; there's no endpoint for a global all-users count.
+
+```python
+g = client.graph_summary()
+# {
+#   "node_count": 1204, "edge_count": 3891,
+#   "nodes_touched": 38, "total_nodes": 150, "coverage_pct": 25.3,
+#   "edges_contributed": 412, "first_discoveries": 18,
+#   "session_count": 27, "dominant_domain": "maritime",
+# }
+```
+
+---
+
+## Agent configs (BYOA)
+
+CRUD wrappers over the same "Bring Your Own Agent" feature exposed by the web app's Settings page. An agent config only changes the **system prompt and focus areas** — it does not restrict which tools are available.
+
+### `AgenticEarth.list_agents()`
+
+```python
+agents = client.list_agents()
+for a in agents:
+    print(a["name"], a["is_default"])
+```
+
+### `AgenticEarth.get_agent(agent_config_id)`
+
+```python
+agent = client.get_agent("agent_cfg_a1b2")
+```
+
+### `AgenticEarth.create_agent()`
+
+```python
+created = client.create_agent(
+    name="Insurance Risk Analyst",
+    system_prompt="Focus on flood/wildfire exposure, cite FEMA/NOAA sources.",
+    focus_areas=["risk", "real_estate"],
+    is_default=True,
+)
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `name` | `str` | required | |
+| `system_prompt` | `str \| None` | `None` | |
+| `description` | `str \| None` | `None` | |
+| `focus_areas` | `list[str] \| None` | `None` | |
+| `is_default` | `bool` | `False` | |
+
+**Returns:** the created config dict, including `id`.
+
+### `AgenticEarth.update_agent(agent_config_id, ...)`
+
+Same parameters as `create_agent()`, all optional — only non-`None` fields are changed.
+
+```python
+client.update_agent("agent_cfg_a1b2", is_default=True)
+```
+
+### `AgenticEarth.delete_agent(agent_config_id)`
+
+```python
+client.delete_agent("agent_cfg_a1b2")
+```
+
+---
+
 ## `QueryResult`
 
 Returned by `client.query()`.
@@ -195,6 +266,26 @@ gdf = result.fetch(format="parquet")
 |-----------|------|---------|-------------|
 | `result_key` | `str \| None` | `None` | Defaults to `result_keys[0]` |
 | `format` | `str` | `"geojson"` | `"geojson"` or `"parquet"` |
+
+---
+
+### `QueryResult.preview()`
+
+Preview a result in the terminal as a table, or open it in the browser as an interactive map or chart.
+
+```python
+result.preview()              # table of first 5 rows
+result.preview(n=10)          # first 10 rows
+result.preview(browser=True)  # open map (or chart) in browser
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `result_key` | `str \| None` | `None` | Defaults to `result_keys[0]` |
+| `n` | `int` | `5` | Rows to show in table mode |
+| `browser` | `bool` | `False` | Open an interactive Leaflet map (or Plotly chart, for chart results) in the browser instead |
+
+**Returns:** `None` — prints the table or opens the browser.
 
 ---
 
