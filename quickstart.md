@@ -18,16 +18,20 @@ pip install agenticearth[geo]
 
 CLI and SDK access requires a **Pro plan or above**. [Upgrade at agenticearth.app →](https://agenticearth.app)
 
-## Get an API key
-
-Sign in at [agenticearth.app](https://agenticearth.app), click your avatar → **API Keys**, and generate a key. Keys start with `ae_sk_`.
-
 ## Authenticate
 
+The fastest way to get set up, sign up or log in and save an API key in one step:
+
 ```bash
-ae login
-# API key (from agenticearth.app/settings): ae_sk_...
-# ✓ Logged in. Key saved to ~/.agenticearth/config.json
+ae signup
+```
+
+This opens your browser to sign up or log in, and (if you're not already on Pro or Enterprise) prompts you to upgrade, then saves the key to `~/.agenticearth/config.json` automatically, no copy-pasting required.
+
+Already have a key? Paste it directly instead:
+
+```bash
+ae login --key ae_sk_...
 ```
 
 Or use an environment variable — useful for CI, notebooks, and scripts:

@@ -26,7 +26,12 @@ pip install "agenticearth[mcp]"
 
 ### 1. Get your API key
 
-Sign in at [agenticearth.app](https://agenticearth.app), click your avatar → **API Keys**, and copy your `ae_sk_...` key.
+```bash
+pip install agenticearth
+ae signup
+```
+
+This opens your browser to sign up or log in (and upgrade, if needed) and saves your `ae_sk_...` key to `~/.agenticearth/config.json` automatically. Run `ae whoami` to see it.
 
 ### 2. Edit the config
 

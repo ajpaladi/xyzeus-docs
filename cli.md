@@ -16,21 +16,45 @@ ae --version
 
 ## Authentication
 
+::: warning Requirements
+CLI and SDK access requires a **Pro plan or above**. `ae signup` will prompt you to upgrade if your account is on Free or Hobbyist.
+:::
+
 ```bash
-ae login
+ae signup
 ```
 
-Saves your key to `~/.agenticearth/config.json`. You can also set `AE_API_KEY` as an environment variable to skip the config file entirely.
+Opens your browser to sign up or log in, then saves your key to `~/.agenticearth/config.json` automatically. This is the recommended way to get started, no need to visit the website first.
+
+Already have a key, or setting up in a CI/headless environment? Use `ae login --key` or the `AE_API_KEY` environment variable instead.
 
 ---
 
 ## Commands
 
-### `ae login`
+### `ae signup`
 
-Save your API key.
+Create an account (or log in) and save an API key — entirely from the terminal.
 
 ```bash
+ae signup
+```
+
+| Option | Description |
+|--------|-------------|
+| `--url` | Custom API base URL (default: `https://api.agenticearth.app`) |
+
+Under the hood, this opens a short-lived browser session at `agenticearth.app/cli-auth`, waits for you to sign in (and upgrade, if needed), then polls until it's ready and saves the resulting key, no copy-pasting.
+
+---
+
+### `ae login`
+
+Save an API key you already have, without going through the browser.
+
+```bash
+ae login --key ae_sk_...
+# or interactively:
 ae login
 # Prompts: API key (from agenticearth.app/settings)
 ```
@@ -97,10 +121,15 @@ Sessions are saved automatically to `~/.agenticearth/sessions/` and can be resum
 
 | Command | Description |
 |---------|-------------|
-| `/save <file>` | Export the last result. Extension sets format: `.geojson`, `.csv`, `.parquet` |
+| `/preview <key>` | Preview a result as a table in the terminal |
+| `/map <key>` | Open a result as an interactive map in the browser |
+| `/save <file>` | Export the last result to a local file. Extension sets format: `.geojson`, `.csv`, `.parquet` |
+| `/keep [key]` | Save a result permanently to your My Data library in the web app (different from `/save` — this persists to the cloud, not a local file) |
+| `/agent [name]` | Show your active BYOA agent, or switch to a different saved one |
 | `/upload <file>` | Upload a file mid-session and make it available to the agent |
 | `/view <key>` | Open a chart result in the browser |
 | `/credits` | Show current credit balance and tier |
+| `/graph` | Show your knowledge graph stats (same as `ae graph`) |
 | `/datasets` | List your uploaded datasets |
 | `/sessions` | List saved sessions |
 | `/clear` | Reset conversation history (keeps the session) |
@@ -149,6 +178,25 @@ Open a chart result in the browser. If the result is not a chart, use `ae export
 ```bash
 ae view create_chart_e8d1
 ```
+
+---
+
+### `ae preview`
+
+Preview a result as a table in the terminal, or open it as an interactive map in the browser.
+
+```bash
+ae preview get_conflict_events_a1b2          # first 5 rows as table
+ae preview get_conflict_events_a1b2 -n 10    # first 10 rows
+ae preview get_conflict_events_a1b2 --map    # open as a Leaflet map in the browser
+ae preview get_ais_vessels_c3d4 --map        # vessel positions on a dark map
+```
+
+| Option | Description |
+|--------|-------------|
+| `--rows`, `-n` | Number of rows to show in the table preview (default: 5) |
+| `--map` | Open the result as an interactive map instead of a table |
+| `--url` | Custom API base URL |
 
 ---
 
@@ -203,6 +251,27 @@ ae credits
 
 ---
 
+### `ae graph`
+
+Show your knowledge graph stats — nodes and edges you've touched, and your contribution to the global graph (same data as the web app's My Graph tab). This is always scoped to your own account; there's no global all-users count exposed by the API.
+
+```bash
+ae graph
+
+  Your Graph
+  Nodes touched:      1,204
+  Edges discovered:   3,891
+
+  Contribution to the global graph
+  Tool coverage:      38 / 150 tools  [25.3%]
+  [█████░░░░░░░░░░░░░░░]
+  Edges contributed:  412  (18 first discoveries)
+  Sessions:           27
+  Top domain:         maritime
+```
+
+---
+
 ### `ae sessions`
 
 List all saved chat sessions, most recent first.
@@ -228,6 +297,53 @@ ae datasets
   ds_a1b2c3d4         survey_results.csv              4,201
   ds_e5f6g7h8         infrastructure.geojson          892
 ```
+
+---
+
+### `ae agent`
+
+Manage BYOA (Bring Your Own Agent) configs — the same feature as the web app's Settings page, just from the terminal. An agent config only changes the system prompt and focus areas; it doesn't restrict which tools are available.
+
+```bash
+ae agent list                          # list your saved agents
+ae agent show "Insurance Risk Analyst" # show full details, including system prompt
+ae agent delete "Insurance Risk Analyst"
+ae agent create                        # interactive wizard
+```
+
+Scripted, non-interactive create:
+
+```bash
+ae agent create --name "Insurance Risk Analyst" \
+  --system-prompt "Focus on flood/wildfire exposure, cite FEMA/NOAA sources." \
+  --focus-area risk --focus-area real_estate --default
+```
+
+| Subcommand | Description |
+|------------|-------------|
+| `list` | List your saved agents |
+| `show <name>` | Show full details for one agent, including its system prompt |
+| `delete <name>` | Delete a saved agent (`--yes` to skip confirmation) |
+| `create` | Build a new agent — interactive wizard, or scripted with flags |
+
+Use a saved agent in a session:
+
+```bash
+ae chat --agent "Insurance Risk Analyst"
+```
+
+---
+
+### `ae set-mapbox-token`
+
+Save a Mapbox public token for `/map` and `ae preview --map`'s basemap. Without this, map previews fall back to a plain Esri basemap with no style switcher.
+
+```bash
+ae set-mapbox-token
+# Prompts: Mapbox public token (starts with pk.)
+```
+
+The `MAPBOX_TOKEN` or `MAPBOX_ACCESS_TOKEN` environment variables are checked first if you already export one for other tools; this command is for making it permanent and shell-independent instead.
 
 ---
 

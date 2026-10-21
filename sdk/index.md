@@ -30,8 +30,10 @@ pip install agenticearth[geo]
 Set your API key once with the CLI:
 
 ```bash
-ae login
+ae signup
 ```
+
+This opens your browser to sign up or log in and saves the key automatically. Already have a key? Use `ae login --key ae_sk_...` instead.
 
 Or pass it directly in code, or via environment variable:
 

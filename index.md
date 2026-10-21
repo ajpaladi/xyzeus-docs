@@ -33,7 +33,7 @@ features:
 
   - icon: ⚡
     title: One-line install
-    details: "pip install agenticearth — then ae login. You're querying live satellite, vessel, conflict, and climate data in under a minute."
+    details: "pip install agenticearth — then ae signup. You're querying live satellite, vessel, conflict, and climate data in under a minute."
 
   - icon: 🤖
     title: Natural language to geodata
